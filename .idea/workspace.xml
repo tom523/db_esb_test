@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d0b5977-d4fd-4682-ad09-dbe7f33141a8" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/home_application/models_store.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/templates/test_application/index_magic.html" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/conf/settings_development.py" afterPath="$PROJECT_DIR$/conf/settings_development.py" />
-      <change beforePath="$PROJECT_DIR$/conf/settings_testing.py" afterPath="$PROJECT_DIR$/conf/settings_testing.py" />
-      <change beforePath="$PROJECT_DIR$/home_application/urls.py" afterPath="$PROJECT_DIR$/home_application/urls.py" />
-      <change beforePath="$PROJECT_DIR$/home_application/views.py" afterPath="$PROJECT_DIR$/home_application/views.py" />
-      <change beforePath="$PROJECT_DIR$/test_application/views.py" afterPath="$PROJECT_DIR$/test_application/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -494,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525954017758</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="llll">
+      <created>1525964449434</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1525964449434</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
