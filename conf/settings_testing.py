@@ -17,7 +17,7 @@ from settings import APP_ID
 # 数据库设置, 测试环境数据库设置
 # ===============================================================================
 DATABASES = {
-    'default': {
+    'default': {   # 存储菜单版本原始数据
         'ENGINE': 'django.db.backends.mysql',  # 默认用mysql
         'NAME': "db_esb_test",                        # 数据库名 (默认与APP_ID相同)
         'USER': 'root',                        # 你的数据库user
@@ -25,7 +25,7 @@ DATABASES = {
         'HOST': '192.168.200.11',                   # 开发的时候，使用localhost
         'PORT': '3306',                        # 默认3306
     },
-    'dicos_menu': {
+    'dicos_menu': {  #  映射dicos生产数据库
         'ENGINE': 'django.db.backends.mysql',  # 默认用mysql
         'NAME': 'test_dicos_menu',  # 数据库名 (默认与APP_ID相同)
         'USER': 'admin',  # 你的数据库user

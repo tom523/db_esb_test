@@ -17,7 +17,7 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render_mako_context(request, '/test_application/index.html', {})
+    return render_mako_context(request, '/test_application/index_magic.html', {})
 
 
 # @login_exempt

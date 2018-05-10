@@ -17,6 +17,7 @@ urlpatterns = patterns(
     (r'^dev-guide/$', 'dev_guide'),
     (r'^contactus/$', 'contactus'),
     (r'^get_test_data/$', 'get_test_data'),
+    (r'^get_menu_version/$', 'get_menu_version'),
     (r'^(?P<menu_version_id>[0-9]+)/(?P<store_code>[0-9]{6})/new_menu/$', 'new_menu'),
     (r'^(?P<menu_version_id>[0-9]+)/(?P<store_codes>[_0-9]{6,})/new_menu_m/$', 'new_menu_for_multiple_store'),
 )

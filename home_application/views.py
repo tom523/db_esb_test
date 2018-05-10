@@ -10,6 +10,7 @@ See the License for the specific language governing permissions and limitations 
 """
 
 from common.mymako import render_mako_context, render_json
+from home_application.models_store import Store
 from models_menu import MasterMcTComboReplaceProduct, MasterMcTOnlineProduct, MasterMcTMenuCategoryItem
 from models import MenuVersionOnlineProduct, MenuVersionReplaceProduct, MenuVersion, MenuVersionCategoryItem
 import time
@@ -145,3 +146,26 @@ def _new_menu(request, menu_version_id, store_code):
         c_querysetlist.append(c_item.to_MasterMcTMenuCategoryItem(store_code))
     MasterMcTMenuCategoryItem.objects.using('dicos_menu').bulk_create(c_querysetlist)
         # c_item.to_MasterMcTMenuCategoryItem(store_code).save(using='test_dicos_menu')
+
+
+
+def get_storename_by_storecode(request, storecode):
+    store = Store.objects.using('store_info').get(storecode=storecode)
+    return store.storename
+
+
+def get_menu_version(request):
+    menu = {}
+    for mv in MenuVersion.objects.all():
+        menu[mv.id]=mv.menu_cn_name
+    return render_json({
+        "code": 0,
+        "message": "",
+        "data": menu,
+    })
+
+
+
+
+
+

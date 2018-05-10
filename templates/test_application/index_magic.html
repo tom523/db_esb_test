@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
+    <!-- Bootstrap css -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!-- kendo ui css -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.default.min.css" rel="stylesheet">
+    <!-- font-awesome -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <!--蓝鲸提供的公用样式库 -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk_pack.css" rel="stylesheet">
+    <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+    <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/bk/js/bk.js"></script>
+    <!-- 数据埋点统计 -->
+    <script src="https://magicbox.bkclouds.cc/static_api/analysis.js"></script>
+    <script src="${STATIC_URL}assets/bkDialog-1.0/js/dialog.js"></script>
+    <link href="${STATIC_URL}assets/bkDialog-1.0/css/ui-dialog.css" rel="stylesheet">
+    <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+    <!--[if lt IE 9]><script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/html5shiv.min.js"></script><script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/respond.min.js"></script><![endif]-->
+</head>
+
+<body class="bg-white" data-bg-color="bg-white">
+    <div class="king-page-box">
+        <div class="king-layout1-header">
+            <nav class="">
+                <div style="overflow:hidden; z-index: inherit; background-color: #0d1015" class="navbar king-horizontal-nav1 king-horizontal-info f14">
+                    <div class="navbar-container">
+                        <div class="navbar-header pull-left">
+                            <a class="navbar-brand" href="javascript:;">
+                                <img src="https://magicbox.bkclouds.cc/static_api/v3/bk/images/logo.png" class="logo"> </a>
+                        </div>
+                        <ul class="nav navbar-nav pull-left m0">
+                            <li class="active"><a href="javascript:void(0);">首页</a></li>
+                            <li><a href="javascript:void(0);">关于我们</a></li>
+                            <li><a href="javascript:void(0);">联系我们</a></li>
+                        </ul>
+                        <div class="navbar-header pull-right">
+                            <ul class="nav">
+                                <li class="user-info">
+                                    <a href="javascript:;">
+                                        <img class="img-rounded" src="https://magicbox.bkclouds.cc/static_api/v3/components/horizontal_nav1/images/avatar.png">
+                                        <span>admin</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="king-layout1-main clearfix">
+            <!-- sidebar start -->
+            <div class="king-layout1-sidebar" style="width:216px;">
+                <nav style="height:100%;" class="   f14">
+                    <div class="king-vertical-nav4">
+                        <div class="sidebar-inner">
+                            <ul class="navi">
+                                <li class="has_submenu current open active c-open">
+                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                        <span>多门店上菜单</span>
+                                    </a>
+                                </li>
+                                <li class="has_submenu current open c-open">
+                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                        <span>多门店更新菜单</span>
+                                    </a>
+                                </li>
+                                <li class="has_submenu current open c-open">
+                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                        <span>待添加操作...</span>
+                                    </a>
+
+                                </li>
+                                <li class="has_submenu current open c-open">
+                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                        <span>待添加操作...</span>
+
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- sidebar end -->
+            <!-- content start -->
+            <div class="king-content-wrap">
+                <div class="king-layout1-content" style="margin-left: 216px;">
+                    <div class="panel panel-default mb0">
+                        <div class="panel-heading"> 多门店上新菜单 </div>
+                        <div class="panel-body">
+                                <div>
+                                    <label class="control-label col-sm-2 pt0" for="introduction">门店ID：</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" rows="3" placeholder="提示信息" id="store_code_id"></textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="col-sm-2 control-label bk-lh30 pt0">菜单版本：</label>
+                                    <div class="col-sm-10">
+                                        <select name="" id="menu_version_select" class="form-control bk-valign-top">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div >
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="button" class="king-btn mr10  king-success" id="new_menu_btn">提交</button>
+                                        <button type="button" class="king-btn king-default ">取消</button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content end -->
+        </div>
+    </div>
+    <script>
+        $(function(){
+             var li = $('.navi li');
+             li.each(function(){
+             $(this).click(function(){
+             if( $(this).hasClass('c-open')){
+                $(this).find('ul').slideUp(350);
+                $(this).removeClass('c-open');
+             }else{
+               $(this).find('ul').slideDown(350);
+               $(this).addClass('c-open');
+               }
+              })
+           });
+        })
+
+        $.get('/get_menu_version', {}, function (res) {
+            for (var key in res.data){
+                $('#menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
+            }
+        })
+
+        function isNo(str) {
+            var reg=/^[0-9]{6}$/;
+            return reg.test(str);
+        }
+
+        function isArrayItemNo(str) {
+            for(var i=0; i<str.length; i++){
+                if(isNo(str[i])){
+                    continue;
+                }else{
+                    return false
+                }
+            }
+            return true;
+        }
+        function errorAlert(message) {
+            var d = dialog({
+                width: 260,
+                title: '提示',
+                cancel: function (){},
+                ok: function() {},
+                okValue: '确定',
+                content: '<div class="king-notice-box king-notice-fail"><p class="king-notice-text">'+message+'</p></div>',
+                cancelValue: '取消',
+                cancel: function() {
+                    // do something
+                }
+            });
+            d.show();
+        }
+
+        function successAlert(message) {
+            var d = dialog({
+                width: 260,
+                title: '提示',
+                cancel: function (){},
+                ok: function() {},
+                okValue: '确定',
+                content: '<div class="king-notice-box king-notice-success"><p class="king-notice-text">'+message+'</p></div>',
+                cancelValue: '取消',
+                cancel: function() {
+                    // do something
+                }
+            });
+            d.show();
+
+        }
+        
+        $('#new_menu_btn').click(function () {
+            selectid = $('#menu_version_select option:selected').val()
+            storecode = $('#store_code_id').val()
+            if(storecode == ""){
+                errorAlert("查询门店不能为空")
+            }else if(!isArrayItemNo(storecode.split(','))){
+                errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
+            }else{
+                $.get('/' + selectid + '/' + storecode.replace(/,/g,"_") + '/new_menu_m/', {}, function (res) {
+                    if(res.code==0){
+                        successAlert("新上门店成功")
+                    }
+                })
+            }
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>
