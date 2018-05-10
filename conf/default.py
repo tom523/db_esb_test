@@ -30,8 +30,8 @@ from django.conf.global_settings import *  # noqa
 # 应用基本信息配置 (请按照说明修改)
 # ==============================================================================
 # 在蓝鲸智云开发者中心 -> 点击应用ID -> 基本信息 中获取 APP_ID 和 APP_TOKEN 的值
-APP_ID = 'db-esb-test'
-APP_TOKEN = 'e947ebe9-5e28-466d-86f6-f549b39b3e74'
+APP_ID = 'new-menu'
+APP_TOKEN = '1826e877-bf24-44fe-a35b-e45e9ffaeef5'
 # 蓝鲸智云开发者中心的域名，形如：http://paas.bking.com
 BK_PAAS_HOST = 'http://paas.blueking.com'
 
