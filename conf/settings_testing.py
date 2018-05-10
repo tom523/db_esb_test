@@ -19,7 +19,7 @@ from settings import APP_ID
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 默认用mysql
-        'NAME': "db-esb-test",                        # 数据库名 (默认与APP_ID相同)
+        'NAME': "db_esb_test",                        # 数据库名 (默认与APP_ID相同)
         'USER': 'root',                        # 你的数据库user
         'PASSWORD': '123456',                        # 你的数据库password
         'HOST': '192.168.200.11',                   # 开发的时候，使用localhost
