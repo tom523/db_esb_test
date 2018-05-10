@@ -20,8 +20,12 @@ $.ajaxSetup({
             // these HTTP methods do not require CSRF protection
             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
         }
+
+        debugger
+        alert(12131)
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             var csrftoken = getCookie('csrftoken');
+            debugger
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
     }

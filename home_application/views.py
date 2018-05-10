@@ -13,6 +13,7 @@ from common.mymako import render_mako_context, render_json
 from models_menu import MasterMcTComboReplaceProduct, MasterMcTOnlineProduct, MasterMcTMenuCategoryItem
 from models import MenuVersionOnlineProduct, MenuVersionReplaceProduct, MenuVersion, MenuVersionCategoryItem
 import time
+from common.log import logger
 
 
 def home(request):
@@ -106,7 +107,7 @@ def new_menu(request, menu_version_id, store_code):
             # logger.info(c_item.to_MasterMcTMenuCategoryItem(store_code))
 
     except Exception, e:
-        # logger.debug(e)
+        logger.error("get menuversion id : %s" % e)
         return render_json({
             "result": False,
             "code": 111,
@@ -127,11 +128,20 @@ def new_menu(request, menu_version_id, store_code):
 
 def _new_menu(request, menu_version_id, store_code):
     m = MenuVersion.objects.filter(id=menu_version_id)
+    r_querysetlist = []
     for ritem in MenuVersionReplaceProduct.objects.filter(MENU_VERSION=m):
-        ritem.to_MasterMcTComboReplaceProduct(store_code).save(using='dicos_menu')
+        r_querysetlist.append(ritem.to_MasterMcTComboReplaceProduct(store_code))
+        # ritem.to_MasterMcTComboReplaceProduct(store_code).save(using='test_dicos_menu')
+    MasterMcTComboReplaceProduct.objects.using('dicos_menu').bulk_create(r_querysetlist)
 
+    o_querysetlist = []
     for oitem in MenuVersionOnlineProduct.objects.filter(MENU_VERSION=m):
-        oitem.to_MasterMcTOnlineProduct(store_code).save(using='dicos_menu')
+        o_querysetlist.append(oitem.to_MasterMcTOnlineProduct(store_code))
+    MasterMcTOnlineProduct.objects.using('dicos_menu').bulk_create(o_querysetlist)
+        # oitem.to_MasterMcTOnlineProduct(store_code).save(using='test_dicos_menu')
 
+    c_querysetlist = []
     for c_item in MenuVersionCategoryItem.objects.filter(MENU_VERSION=m):
-        c_item.to_MasterMcTMenuCategoryItem(store_code).save(using='dicos_menu')
+        c_querysetlist.append(c_item.to_MasterMcTMenuCategoryItem(store_code))
+    MasterMcTMenuCategoryItem.objects.using('dicos_menu').bulk_create(c_querysetlist)
+        # c_item.to_MasterMcTMenuCategoryItem(store_code).save(using='test_dicos_menu')
