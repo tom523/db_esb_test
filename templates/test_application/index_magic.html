@@ -38,7 +38,7 @@
            height: 100%;
            background-color: #9d9d9d;
            opacity: 0.5;
-           z-index: 3;
+           z-index: 999;
         }
     </style>
     <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
@@ -46,11 +46,12 @@
 </head>
 
 <body class="bg-white" data-bg-color="bg-white">
+    <div class="forbidden_layer" id="forbidden_layer" style="display: none"></div>
+    <div class="king-loading" id="loding-img-2" style="display: none;">
+        <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading1/images/loading_2_b_36x36.gif" />
+    </div>
     <div class="king-page-box">
-        <div class="forbidden_layer" id="forbidden_layer" style="display: none"></div>
-        <div class="king-loading" id="loding-img-2" style="display: none;">
-            <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading1/images/loading_2_b_36x36.gif" />
-        </div>
+
         <div class="king-layout1-header">
             <nav class="">
                 <div style="overflow:hidden; z-index: inherit; background-color: #0d1015" class="navbar king-horizontal-nav1 king-horizontal-info f14">
