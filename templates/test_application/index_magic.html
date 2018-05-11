@@ -29,6 +29,11 @@
     <!-- 数据埋点统计 -->
     <script src="https://magicbox.bkclouds.cc/static_api/analysis.js"></script>
     <script src="${STATIC_URL}assets/bkDialog-1.0/js/dialog.js"></script>
+    <script type="text/javascript">
+        var app_id = "${APP_ID}";
+        var site_url = "${SITE_URL}";	  // app的url前缀,在ajax调用的时候，应该加上该前缀
+        var static_url = "${STATIC_URL}"; // 静态资源前缀
+    </script>
     <link href="${STATIC_URL}assets/bkDialog-1.0/css/ui-dialog.css" rel="stylesheet">
     <style type="text/css">
         .forbidden_layer{
@@ -163,7 +168,7 @@
            });
         })
 
-        $.get('/get_menu_version', {}, function (res) {
+        $.get(site_url + 'get_menu_version', {}, function (res) {
             for (var key in res.data){
                 $('#menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
             }
@@ -227,7 +232,7 @@
             }else if(!isArrayItemNo(storecode.split(','))){
                 errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
             }else{
-                $.get('/' + selectid + '/' + storecode.replace(/,/g,"_") + '/new_menu_m/', {}, function (res) {
+                $.get(site_url + selectid + '/' + storecode.replace(/,/g,"_") + '/new_menu_m/', {}, function (res) {
                     $('#loding-img-2').hide()
                     $('#forbidden_layer').hide()
                     if(res.code==0){
