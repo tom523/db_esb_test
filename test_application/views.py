@@ -15,9 +15,18 @@ from account.decorators import login_exempt
 from common.mymako import render_mako_context, render_json
 from django.http import HttpResponse
 from common.log import logger
+from home_application.models import MenuVersion
+import random
 
 def home(request):
-    return render_mako_context(request, '/test_application/index_magic.html', {})
+    # from blueking.component.shortcuts import get_client_by_request
+    # client = get_client_by_request(request)
+    # kwargs = {}
+    # result = client.cc.search_business(kwargs)
+    # return render_mako_context(request, '/test_application/index_magic.html', {
+    #     "menu_version": result.get('data').get('info')
+    # })
+    pass
 
 
 # @login_exempt
@@ -36,6 +45,17 @@ def new_version(request):
 def check_storeids(request):
     store_id_list = request.GET.getlist('data[]')
     items_list = []
+    for i in range(len(store_id_list)):
+        item = {
+            "index": i,
+            "columnName1": store_id_list[i],
+            "columnName2": u"门店名称",
+            "columnName3": random.choice([u'通过', u'不通过']),
+            "columnName4": random.choice([u'通过', u'不通过']),
+        }
+        item['isOk'] = u'通过' if item['columnName2'] == u'通过' and item['columnName3'] == u'通过' else u'不通过',
+
+        items_list.append(item)
 
     rtdata = {
         "catalogues":{
@@ -45,31 +65,30 @@ def check_storeids(request):
             "host": u"检查项1",
             "date": u"检查项2",
         },
-        "items":[
-            {
-                "index": 1,
-                "columnName1": "111111",
-                "columnName2": u"门店名称1",
-                "columnName3": u"通过",
-                "columnName4": u"通过",
-                "isOk": 1,
-            },
-            {
-                "index": 1,
-                "columnName1": "222222",
-                "columnName2": u"门店名称1",
-                "columnName3": u"通过",
-                "columnName4": u"通过",
-                "isOk": 1,
-            },
-            {
-                "index": 3,
-                "columnName1": "222222",
-                "columnName2": u"门店名称1",
-                "columnName3": u"未通过",
-                "columnName4": u"通过",
-                "isOk": 0,
-            },
-        ]
+        "items":items_list
     }
     return render_json(rtdata)
+
+
+def change_version(request):
+    pass
+
+
+# 发版操作
+def new_menu(request):
+
+    pass
+
+
+def get_menu_version(request):
+    menu = {}
+    for mv in MenuVersion.objects.all():
+        menu[mv.id]=mv.menu_cn_name
+    return render_json({
+        "code": 0,
+        "message": "",
+        "data": menu,
+    })
+
+
+
