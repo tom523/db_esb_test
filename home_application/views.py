@@ -148,7 +148,6 @@ def _new_menu(request, menu_version_id, store_code):
         # c_item.to_MasterMcTMenuCategoryItem(store_code).save(using='test_dicos_menu')
 
 
-
 def get_storename_by_storecode(request, storecode):
     store = Store.objects.using('store_info').get(storecode=storecode)
     return store.storename
@@ -163,6 +162,10 @@ def get_menu_version(request):
         "message": "",
         "data": menu,
     })
+
+
+def get_all_product(request):
+    pass
 
 
 

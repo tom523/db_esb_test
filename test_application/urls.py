@@ -15,4 +15,8 @@ urlpatterns = patterns(
     'test_application.views',
     (r'^$', "home"),
     (r'^test/', "test"),
+    (r'^new_version/', "new_version"),
+    (r'^change_version/', "change_version"),
+    (r'^check_storeids/', "check_storeids"),
+
 )
