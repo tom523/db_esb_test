@@ -16,7 +16,9 @@ from common.mymako import render_mako_context, render_json
 from django.http import HttpResponse
 from common.log import logger
 from home_application.models import MenuVersion
-import random
+from test_application.models import NewVersionFail, NewVersionSuccess
+import random, datetime
+import json
 
 def home(request):
     # from blueking.component.shortcuts import get_client_by_request
@@ -53,7 +55,7 @@ def check_storeids(request):
             "columnName3": random.choice([u'通过', u'不通过']),
             "columnName4": random.choice([u'通过', u'不通过']),
         }
-        item['isOk'] = u'通过' if item['columnName2'] == u'通过' and item['columnName3'] == u'通过' else u'不通过',
+        item['isOk'] = u'通过' if item['columnName3'] == '通过' and item['columnName4'] == '通过' else u'不通过',
 
         items_list.append(item)
 
@@ -76,8 +78,34 @@ def change_version(request):
 
 # 发版操作
 def new_menu(request):
-
-    pass
+    items_unicode = request.GET.get('data')
+    items_list = json.loads(str(items_unicode))
+    for item in items_list:
+        if item['isOk'][0] == '不通过':
+            NewVersionFail.objects.create(
+                storeid = item['columnName1'],
+                storename = item['columnName2'],
+                create_time = datetime.datetime.now(),
+                menu_version=MenuVersion.objects.get(id = item['menu_version_id']),
+            )
+        elif item['isOk'][0] == "通过":
+            NewVersionSuccess.objects.create(
+                storeid=item['columnName1'],
+                storename=item['columnName2'],
+                create_time=datetime.datetime.now(),
+                menu_version=MenuVersion.objects.get(id=item['menu_version_id']),
+            )
+        else:
+            return render_json({
+                "code": 10,
+                "message": "unknown error",
+                "data": "",
+            })
+    return render_json({
+        "code": 0,
+        "message": "",
+        "data": "",
+    })
 
 
 def get_menu_version(request):

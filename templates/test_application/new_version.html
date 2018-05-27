@@ -40,7 +40,7 @@
                                         <td style="width: 20%;">#columnName3#</td>
                                         <td>#columnName4#</td>
                                         <td>
-                                            <select class="menu_version_select" name="" >
+                                            <select id="#columnName1#" class="menu_version_select" name="" >
 
                                             </select>
                                         </td>
@@ -50,7 +50,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="demo2" style=""> </div>
+                    <div class="tab-pane fade" id="demo2" style="">
+                          <div class="king-block king-block-bordered">
+                            <div class="king-block-header king-gray-light">
+                                <h3 class="king-block-title">综合示例</h3>
+                            </div>
+                            <div class="king-block-content">
+                              <table id="table2_demo4" class="table table-bordered table-striped">
+                                <thead>
+                                  <tr>
+                                    <th>名称</th>
+                                    <th>职位</th>
+                                    <th>工资</th>
+                                    <th>开始时间</th>
+                                    <th>位置</th>
+                                    <th>分机号</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                              </table>
+                            </div>
+                          </div>
+                    </div>
                     <div class="tab-pane fade" id="demo3" style=""> </div>
                 </div>
             </div>
@@ -58,7 +79,6 @@
     </div>
 
             <!-- content end -->
-    <script src="${STATIC_URL}js/new_version.js"></script>
     <script>
         content_html = "    <div class=\"king-page-box\">\n" +
             "        <div class=\"king-container clearfix\">\n" +
@@ -123,13 +143,13 @@
                     })
                     ## 发版操作
                     $('#newversion').click(function () {
-                        data = []
-                        for(var i =0, len=list.length; i< len; i++){
-                            if(list[i]['isOk'] == 1){
-                                storeid = list[i]['columnName1']
-                            }
+                        ## 获取每个门店对应的菜单版本
+                        selectid = $('.menu_version_select option:selected').val()
+                        for(var index in list){
+                            menu_version_id = $('#' + list[index]['columnName1'] + " option:selected").val()
+                            list[index]['menu_version_id']=menu_version_id
                         }
-                        $.get(site_url + "new_menu", {data: data}, function (res) {
+                        $.get(site_url + "new_menu", {data: JSON.stringify(list)}, function (res) {
                             
                         })
                     })
@@ -151,4 +171,64 @@
 
         });
     </script>
+
+##     未发版成功标签页
+    <script type="text/javascript">
+      $(function () {
+        //table2_demo4_js_start
+        //表格(DataTables)-4，综合示例
+        var language = {
+          search: '搜索：',
+          lengthMenu: "每页显示 _MENU_ 记录",
+          zeroRecords: "没找到相应的数据！",
+          info: "分页 _PAGE_ / _PAGES_",
+          infoEmpty: "暂无数据！",
+          infoFiltered: "(从 _MAX_ 条数据中搜索)",
+          paginate: {
+            first: '首页',
+            last: '尾页',
+            previous: '上一页',
+            next: '下一页',
+          }
+        }
+        $("#table2_demo4").dataTable({
+            autoWidth: false,
+            lengthChange: true, //不允许用户改变表格每页显示的记录数
+            pageLength : 5, //每页显示几条数据
+            lengthMenu: [5, 10, 20], //每页显示选项
+            pagingType: 'full_numbers',
+            ajax : static_url + 'tmp/data.json',
+            ordering: true,
+            columns : [
+              {data:"name",orderable: false},
+              {data:"position"},
+              {data:"salary"},
+              {data:"start_date"},
+              {data:"office"},
+              {data:"extn"},
+              {
+                data:null,
+                orderable:false,
+                render : function(data, type, row, meta){
+                    return '<a class="king-btn king-default del">删除</a>';
+                }
+              }
+            ],
+            language:language
+        });
+
+        var t = $("#table2_demo4").DataTable();//获取datatables对象
+        //删除按钮绑定事件
+        $("#table2_demo4 tbody").on('click', 'a.del', function(){
+            var row = t.row( $(this).parents('tr') ),//获取按钮所在的行
+              data = row.data();
+            if(confirm('确定要删除'+data.name+' ?')){
+              row.remove().draw();
+            }
+
+        });
+        //table2_demo4_js_end
+      });
+    </script>
+
 </%block>
