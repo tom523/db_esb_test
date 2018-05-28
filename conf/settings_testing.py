@@ -20,7 +20,7 @@ DATABASES = {
     'default': {   # 存储菜单版本原始数据
         'ENGINE': 'django.db.backends.mysql',  # 默认用mysql
         'NAME': "db_esb_test",                        # 数据库名 (默认与APP_ID相同)
-        'USER': 'root',                        # 你的数据库user
+        'USER': 'admin',                        # 你的数据库user
         'PASSWORD': '123456',                        # 你的数据库password
         'HOST': '192.168.200.176',                   # 开发的时候，使用localhost
         'PORT': '3306',                        # 默认3306
