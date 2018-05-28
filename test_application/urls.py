@@ -16,9 +16,14 @@ urlpatterns = patterns(
     (r'^$', "home"),
     (r'^test/', "test"),
     (r'^new_version/', "new_version"),
+    (r'^base_version/', "base_version"),
     (r'^new_menu/', "new_menu"),
     (r'^change_version/', "change_version"),
     (r'^check_storeids/', "check_storeids"),
     (r'^get_menu_version/$', 'get_menu_version'),
+    (r'^del_new_version_log/$', 'del_new_version_log'),
+    (r'^get_new_version_success/$', 'get_new_version_success'),
+    (r'^get_new_version_fail/$', 'get_new_version_fail'),
+    (r'^change_version_query_store/$', 'change_version_query_store'),
 
 )

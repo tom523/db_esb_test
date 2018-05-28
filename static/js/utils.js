@@ -49,9 +49,14 @@
 
 
 var myutils = {
+    isNo: function (str) {
+        var reg=/^[0-9]{6}$/;
+        return reg.test(str);
+    },
+
     isArrayItemNo: function (str) {
         for(var i=0; i<str.length; i++){
-            if(isNo(str[i])){
+            if(myutils.isNo(str[i])){
                 continue;
             }else{
                 return false
@@ -59,10 +64,37 @@ var myutils = {
         }
         return true;
     },
-    
-    isNo: function (str) {
-        var reg=/^[0-9]{6}$/;
-        return reg.test(str);
+
+    errorAlert: function (message) {
+    var d = dialog({
+        width: 260,
+        title: '提示',
+        cancel: function (){},
+        ok: function() {},
+        okValue: '确定',
+        content: '<div class="king-notice-box king-notice-fail"><p class="king-notice-text">'+message+'</p></div>',
+        cancelValue: '取消',
+        cancel: function() {
+            // do something
+        }
+    });
+    d.show();
+    },
+
+    successAlert: function (title, message) {
+        var d = dialog({
+            width: 260,
+            title: title,
+            cancel: function (){},
+            ok: function() {},
+            okValue: '确定',
+            content: '<div class="king-notice-box king-notice-success"><p class="king-notice-text">'+message+'</p></div>',
+            cancelValue: '取消',
+            cancel: function() {
+                // do something
+            }
+        });
+        d.show();
     },
     
 }

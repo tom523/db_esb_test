@@ -10,6 +10,8 @@
     <!-- Bootstrap css -->
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/datatables-1.10.7/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
+
     <!-- kendo ui css -->
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.common.min.css" rel="stylesheet">
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.default.min.css" rel="stylesheet">
@@ -100,22 +102,19 @@
                                     </a>
                                 </li>
                                 <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                    <a href="${SITE_URL}change_version"> <i class="fa fa-tasks ">                        </i>
                                         <span>门店换版</span>
                                     </a>
                                 </li>
                                 <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                    <a href="${SITE_URL}base_version"> <i class="fa fa-tasks ">                        </i>
                                         <span>基础版本（从门店）</span>
                                     </a>
-
                                 </li>
                                 <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
+                                    <a href="${SITE_URL}admin/home_application"> <i class="fa fa-tasks ">                        </i>
                                         <span>基础版本（手动）</span>
-
                                     </a>
-
                                 </li>
                             </ul>
                         </div>
@@ -129,7 +128,7 @@
         </div>
     </div>
     <script src="${STATIC_URL}js/utils.js"></script>
-    <script src="${STATIC_URL}js/index_magic.js"></script>
+##     <script src="${STATIC_URL}js/index_magic.js"></script>
     <script>
         $(function(){
              var li = $('.navi li');

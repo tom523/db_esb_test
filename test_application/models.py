@@ -14,18 +14,12 @@ from django.db import models
 from home_application.models import MenuVersion
 
 
-class NewVersionSuccess(models.Model):
-    storeid = models.IntegerField()
+class NewVersionLog(models.Model):
+    storeid = models.IntegerField(unique=True)
     storename = models.CharField(max_length=100)
     create_time = models.DateField()
     menu_version = models.ForeignKey(MenuVersion)
-
-
-class NewVersionFail(models.Model):
-    storeid = models.IntegerField()
-    storename = models.CharField(max_length=100)
-    create_time = models.DateField()
-    menu_version = models.ForeignKey(MenuVersion)
+    success = models.BooleanField()
 
 
 

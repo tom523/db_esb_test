@@ -1,0 +1,192 @@
+<%inherit file="../base.html"/>
+<%block name="content">
+    <div class="king-content-wrap">
+        <div class="king-layout1-content" style="margin-left: 216px;">
+            <div class="panel panel-default mb0">
+            <div class="panel-heading">
+                <button type="button" class="king-btn mr10 king-success" id="change_vsn_query">查询</button>
+                <button type="button" class="king-btn mr10 king-success" id="change_version">换版</button>
+            </div>
+            <div class="panel-body">
+            <table id="change_version_table" class="table mb0 pr15 ranger-box ">
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <!-- 设置面板Start -->
+            <template id="header_tpl">
+                <tr>
+                    <th style="width: 100px;">#index#</th>
+                    <th style="width: 20%;">#task#</th>
+                    <th style="width: 10%;">#progress#</th>
+                    <th style="width: 20%;">#host#</th>
+                    <th>#date#</th>
+                    <th>选择菜单版本</th>
+                </tr>
+            </template>
+            <template id="tpl">
+                <tr>
+                    <td style="width: 100px;">#index#</td>
+                    <td style="width: 20%;">#columnName1#</td>
+                    <td style="width: 10%;">#columnName2#</td>
+                    <td style="width: 20%;">#columnName3#</td>
+                    <td>
+                        <select id="#columnName2#" class="menu_version_select" name="" >
+
+                        </select>
+                    </td>
+                    <td>
+                        <select id="#columnName1#" class="menu_version_select" name="" >
+                        </select>
+                    </td>
+                </tr>
+            </template>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $('#change_vsn_query').click(function _storecheck () {
+            content_html = "    <div class=\"king-page-box\">\n" +
+                "        <div class=\"king-container clearfix\">\n" +
+                "            <form class=\"form-horizontal\">\n" +
+                "                <div class=\"form-group has-feedback clearfix \">\n" +
+                "                    <label class=\"control-label col-sm-2 pt0\" for=\"introduction\">门店ID：</label>\n" +
+                "                    <div class=\"col-sm-10\">\n" +
+                "                        <textarea id=\"store_ids\" class=\"form-control\" rows=\"6\" placeholder=\"填入以逗号分隔的6位数字\"></textarea>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "            </form>\n" +
+                "        </div>\n" +
+                "    </div>"
+            var d = dialog({
+            width: 600,
+            title: '填入门店ID',
+            cancel: function (){},
+            ok: function() {
+                store_id_array = $('#store_ids').val().split(',')
+                if(store_id_array == ""){
+                    myutils.errorAlert("门店ID不能为空")
+                    return
+                }else if(!myutils.isArrayItemNo(store_id_array)){
+                    myutils.errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
+                    return
+                }
+                ##  window.location.href=site_url + 'test_application/new_version?store_ids=' + store_id_array
+                function renderTpl(str, cfg) {
+                    var re = /(#(.+?)#)/g;
+
+                    return str.replace(re, function() {
+                        var val = cfg[arguments[2]]+'';
+                        if(typeof val == 'undefined') {
+                            val = '';
+                        }
+                        return val;
+                    });
+                }
+
+                // 异步请求后台数据
+                $.ajax({
+                    url: site_url + 'change_version_query_store',
+                    data: {data: store_id_array},
+                    type: 'GET',
+                    success: function(res){
+                        var _html = ' ';
+                        var list = res.items;
+                        var tpl = $('#tpl').html();
+                        var headerTpl =  $('#header_tpl').html();
+                        for (var i=0,len=list.length; i < len; i++){
+                            var item = list[i];
+                            _html += renderTpl(tpl, item)
+                        }
+                        ## 填入内容
+                        $('#change_version_table tbody').html(_html);
+                        ## 填入头部
+                        $('#change_version_table thead').html(renderTpl(headerTpl,res.catalogues));
+                        $.get(site_url + 'get_menu_version', {}, function (res) {
+                            for (var key in res.data){
+                                $('.menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
+                            }
+                        })
+                        ## 发版操作
+                        ##  $('#newversion').unbind('click')
+                        ##  $('#newversion').click(function () {
+                        ##      ## 获取每个门店对应的菜单版本
+                        ##      selectid = $('.menu_version_select option:selected').val()
+                        ##      for(var index in list){
+                        ##          menu_version_id = $('#' + list[index]['columnName1'] + " option:selected").val()
+                        ##          list[index]['menu_version_id']=menu_version_id
+                        ##      }
+                        ##      $.get(site_url + "new_menu", {data: JSON.stringify(list)}, function (res) {
+                        ##          new_version_ret(res)
+                        ##      })
+                        ##  })
+
+                    }
+                });
+            },
+            okValue: '检查',
+            content: content_html,
+            cancelValue: '取消',
+            cancel: function() {
+
+            }
+            });
+            d.show();
+        })
+
+        ##  function renderTpl(str, cfg) {
+        ##      var re = /(#(.+?)#)/g;
+        ##
+        ##      return str.replace(re, function() {
+        ##          var val = cfg[arguments[2]]+'';
+        ##          if(typeof val == 'undefined') {
+        ##              val = '';
+        ##          }
+        ##          return val;
+        ##      });
+        ##  }
+        ##
+        ##  // 异步请求后台数据
+        ##  $.ajax({
+        ##      url: site_url + 'check_storeids',
+        ##      data: {data: store_id_array},
+        ##      type: 'GET',
+        ##      success: function(res){
+        ##          var _html = ' ';
+        ##          var list = res.items;
+        ##          var tpl = $('#tpl_1527301039797').html();
+        ##          var headerTpl =  $('#header_tpl_1527301039797').html();
+        ##          for (var i=0,len=list.length; i < len; i++){
+        ##              var item = list[i];
+        ##              _html += renderTpl(tpl, item)
+        ##          }
+        ##          ## 填入内容
+        ##          $('#code_1527301039797 tbody').html(_html);
+        ##          ## 填入头部
+        ##          $('#code_1527301039797 thead').html(renderTpl(headerTpl,res.catalogues));
+        ##          $.get(site_url + 'get_menu_version', {}, function (res) {
+        ##              for (var key in res.data){
+        ##                  $('.menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
+        ##              }
+        ##          })
+        ##          ## 发版操作
+        ##          $('#newversion').unbind('click')
+        ##          $('#newversion').click(function () {
+        ##              ## 获取每个门店对应的菜单版本
+        ##              selectid = $('.menu_version_select option:selected').val()
+        ##              for(var index in list){
+        ##                  menu_version_id = $('#' + list[index]['columnName1'] + " option:selected").val()
+        ##                  list[index]['menu_version_id']=menu_version_id
+        ##              }
+        ##              $.get(site_url + "new_menu", {data: JSON.stringify(list)}, function (res) {
+        ##                  new_version_ret(res)
+        ##              })
+        ##          })
+        ##
+        ##      }
+        ##  });
+    </script>
+</%block>

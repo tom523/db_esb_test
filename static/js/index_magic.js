@@ -19,38 +19,8 @@ function isArrayItemNo(str) {
     }
     return true;
 }
-function errorAlert(message) {
-    var d = dialog({
-        width: 260,
-        title: '提示',
-        cancel: function (){},
-        ok: function() {},
-        okValue: '确定',
-        content: '<div class="king-notice-box king-notice-fail"><p class="king-notice-text">'+message+'</p></div>',
-        cancelValue: '取消',
-        cancel: function() {
-            // do something
-        }
-    });
-    d.show();
-}
 
-function successAlert(message) {
-    var d = dialog({
-        width: 260,
-        title: '提示',
-        cancel: function (){},
-        ok: function() {},
-        okValue: '确定',
-        content: '<div class="king-notice-box king-notice-success"><p class="king-notice-text">'+message+'</p></div>',
-        cancelValue: '取消',
-        cancel: function() {
-            // do something
-        }
-    });
-    d.show();
 
-}
 
 $('#new_menu_btn').click(function () {
     selectid = $('#menu_version_select option:selected').val()
@@ -66,7 +36,7 @@ $('#new_menu_btn').click(function () {
             $('#loding-img-2').hide()
             $('#forbidden_layer').hide()
             if(res.code==0){
-                successAlert("新上门店成功")
+                myutils.successAlert("提示","新上门店成功")
             }
         })
     }
