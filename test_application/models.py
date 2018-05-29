@@ -17,9 +17,10 @@ from home_application.models import MenuVersion
 class NewVersionLog(models.Model):
     storeid = models.IntegerField(unique=True)
     storename = models.CharField(max_length=100)
-    create_time = models.DateField()
+    create_time = models.DateTimeField()
     menu_version = models.ForeignKey(MenuVersion)
-    success = models.BooleanField()
+    oper_type = models.CharField(max_length=100, default=u"发版")
+    oper_user = models.CharField(max_length=100, default="admin")
 
 
 

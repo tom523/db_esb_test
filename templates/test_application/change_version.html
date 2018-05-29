@@ -46,21 +46,48 @@
             </div>
         </div>
     </div>
-    <script>
+    <div class="king-content-wrap" style="display: none" id="query_dialog">
+        <div class="king-layout1-content" style="margin-left: 0px;">
+            <form class="form-horizontal">
+                <div class="form-group has-feedback clearfix ">
+                    <label class="control-label col-sm-3 pt0" for="introduction">门店编码：</label>
+                    <div class="col-sm-9">
+                        <textarea id="store_ids" class="form-control" rows="3" placeholder="填入以逗号分隔的6位数字"></textarea>
+                    </div>
+                </div>
+                <div class="form-group clearfix ">
+                    <label class="col-sm-3 control-label bk-lh30 pt0">菜单版本：</label>
+                    <div class="col-sm-9">
+                        <select name="" id="" class="form-control bk-valign-top menu_version_select">
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <script>
+        content_html = $('#query_dialog');
+        $.get(site_url + 'get_menu_version', {}, function (res) {
+            for (var key in res.data){
+                $('.menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
+            }
+        })
         $('#change_vsn_query').click(function _storecheck () {
-            content_html = "    <div class=\"king-page-box\">\n" +
-                "        <div class=\"king-container clearfix\">\n" +
-                "            <form class=\"form-horizontal\">\n" +
-                "                <div class=\"form-group has-feedback clearfix \">\n" +
-                "                    <label class=\"control-label col-sm-2 pt0\" for=\"introduction\">门店ID：</label>\n" +
-                "                    <div class=\"col-sm-10\">\n" +
-                "                        <textarea id=\"store_ids\" class=\"form-control\" rows=\"6\" placeholder=\"填入以逗号分隔的6位数字\"></textarea>\n" +
-                "                    </div>\n" +
-                "                </div>\n" +
-                "            </form>\n" +
-                "        </div>\n" +
-                "    </div>"
+            ##  content_html = "    <div class=\"king-page-box\">\n" +
+            ##      "        <div class=\"king-container clearfix\">\n" +
+            ##      "            <form class=\"form-horizontal\">\n" +
+            ##      "                <div class=\"form-group has-feedback clearfix \">\n" +
+            ##      "                    <label class=\"control-label col-sm-2 pt0\" for=\"introduction\">门店ID：</label>\n" +
+            ##      "                    <div class=\"col-sm-10\">\n" +
+            ##      "                        <textarea id=\"store_ids\" class=\"form-control\" rows=\"6\" placeholder=\"填入以逗号分隔的6位数字\"></textarea>\n" +
+            ##      "                    </div>\n" +
+            ##      "                </div>\n" +
+            ##      "            </form>\n" +
+            ##      "        </div>\n" +
+            ##      "    </div>"
+
+            content_html.attr("style","display:block");
             var d = dialog({
             width: 600,
             title: '填入门店ID',
@@ -105,11 +132,7 @@
                         $('#change_version_table tbody').html(_html);
                         ## 填入头部
                         $('#change_version_table thead').html(renderTpl(headerTpl,res.catalogues));
-                        $.get(site_url + 'get_menu_version', {}, function (res) {
-                            for (var key in res.data){
-                                $('.menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
-                            }
-                        })
+
                         ## 发版操作
                         ##  $('#newversion').unbind('click')
                         ##  $('#newversion').click(function () {
@@ -128,13 +151,14 @@
                 });
             },
             okValue: '检查',
-            content: content_html,
+            ##  content: content_html,
             cancelValue: '取消',
             cancel: function() {
 
             }
             });
-            d.show();
+            d.showModal();
+            d.content(content_html)
         })
 
         ##  function renderTpl(str, cfg) {

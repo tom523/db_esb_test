@@ -22,8 +22,9 @@ urlpatterns = patterns(
     (r'^check_storeids/', "check_storeids"),
     (r'^get_menu_version/$', 'get_menu_version'),
     (r'^del_new_version_log/$', 'del_new_version_log'),
-    (r'^get_new_version_success/$', 'get_new_version_success'),
+    (r'^get_new_version_log/$', 'get_new_version_log'),
     (r'^get_new_version_fail/$', 'get_new_version_fail'),
+    (r'^get_store_check_result/$', 'get_store_check_result'),
     (r'^change_version_query_store/$', 'change_version_query_store'),
 
 )

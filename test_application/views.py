@@ -80,46 +80,52 @@ def change_version(request):
 def new_menu(request):
     items_unicode = request.GET.get('data')
     items_list = json.loads(items_unicode)
-    duplicated_store = {}
-    success_store = {}
-    fail_store = {}
     for item in items_list:
-        try:
-            if item['isOk'][0] == u'不通过':
-                NewVersionLog.objects.create(
-                    storeid = item['columnName1'],
-                    storename = item['columnName2'],
-                    create_time = datetime.datetime.now(),
-                    menu_version=MenuVersion.objects.get(id = int(item['menu_version_id'])),
-                    success=False,
-                )
-                fail_store[item['columnName1']] = item['columnName2']
-            elif item['isOk'][0] == u"通过":
-                NewVersionLog.objects.create(
-                    storeid=item['columnName1'],
-                    storename=item['columnName2'],
-                    create_time=datetime.datetime.now(),
-                    menu_version=MenuVersion.objects.get(id = int(item['menu_version_id'])),
-                    success=True,
-                )
-                success_store[item['columnName1']] = item['columnName2']
-            else:
-                return render_json({
-                    "code": 10,
-                    "message": "unknown error",
-                    "data": "",
-                })
-        except Exception, e:
-            if(e[0] == 1062):
-                duplicated_store[item['columnName1']] = item['columnName2']
+        NewVersionLog.objects.create(
+            storeid=item['id'],
+            storename=item['name'],
+            create_time=datetime.datetime.now(),
+            menu_version=MenuVersion.objects.get(id = int(item['menu_version_id'])),
+            oper_type=u"发版",
+            oper_user=request.user.username,
+        )
+    # duplicated_store = {}
+    # success_store = {}
+    # fail_store = {}
+    # for item in items_list:
+    #     try:
+    #         if item['isOk'][0] == u'不通过':
+    #             NewVersionLog.objects.create(
+    #                 storeid = item['columnName1'],
+    #                 storename = item['columnName2'],
+    #                 create_time = datetime.datetime.now(),
+    #                 menu_version=MenuVersion.objects.get(id = int(item['menu_version_id'])),
+    #                 success=False,
+    #             )
+    #             fail_store[item['columnName1']] = item['columnName2']
+    #         elif item['isOk'][0] == u"通过":
+    #             NewVersionLog.objects.create(
+    #                 storeid=item['columnName1'],
+    #                 storename=item['columnName2'],
+    #                 create_time=datetime.datetime.now(),
+    #                 menu_version=MenuVersion.objects.get(id = int(item['menu_version_id'])),
+    #                 success=True,
+    #             )
+    #             success_store[item['columnName1']] = item['columnName2']
+    #         else:
+    #             return render_json({
+    #                 "code": 10,
+    #                 "message": "unknown error",
+    #                 "data": "",
+    #             })
+    #     except Exception, e:
+    #         if(e[0] == 1062):
+    #             duplicated_store[item['columnName1']] = item['columnName2']
 
     return render_json({
         "code": 0,
         "message": "",
         "data": "",
-        "duplicated_store": duplicated_store,
-        "fail_store": fail_store,
-        "success_store": success_store,
     })
 
 
@@ -144,6 +150,8 @@ def get_new_version_success(request):
             "menu_version": MenuVersion.objects.get(id = item.menu_version_id).menu_cn_name,
         })
     return render_json({"data": retdata})
+
+
 
 
 def get_new_version_fail(request):
@@ -198,3 +206,40 @@ def change_version_query_store(request):
 
 def base_version(request):
     return render_mako_context(request, '/test_application/base_version.html', {})
+
+
+# 使用datatable后的发版前检查表格的数据
+def get_store_check_result(request):
+    store_id_list = request.GET.get('store_ids').split(',')
+    items_list = []
+    for i in range(len(store_id_list)):
+        item = {
+            "name": u"门店名称",
+            "id": store_id_list[i],
+            "check1": random.choice([u'通过', u'不通过']),
+            "check2": random.choice([u'通过', u'不通过']),
+            "check3": random.choice([u'通过', u'不通过']),
+            "check4": random.choice([u'通过', u'不通过']),
+        }
+        item['isOk'] = u'通过' if \
+                           item['check1'] == u'通过' and \
+                           item['check2'] == u'通过' and \
+                           item['check3'] == u'通过' and \
+                           item['check4'] == u'通过' else u'不通过',
+
+        items_list.append(item)
+    return render_json({"data": items_list})
+
+
+def get_new_version_log(request):
+    retdata = []
+    for item in NewVersionLog.objects.all():
+        retdata.append({
+            "id": item.storeid,
+            "name": item.storename,
+            "create_time": item.create_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "menu_version": MenuVersion.objects.get(id = item.menu_version_id).menu_cn_name,
+            "oper_type": item.oper_type,
+            "oper_user": item.oper_user,
+        })
+    return render_json({"data": retdata})
