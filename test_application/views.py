@@ -178,26 +178,27 @@ def del_new_version_log(request):
 
 def change_version_query_store(request):
     store_id_list = request.GET.getlist('data[]')
+    o_vsn_id = request.GET.get('o_vsn_id')
+    n_vsn_id = request.GET.get('n_vsn_id')
     items_list = []
     for i in range(len(store_id_list)):
         item = {
             "index": i,
-            "columnName1": store_id_list[i],
-            "columnName2": u"门店名称",
-            "columnName3": random.choice([u'通过', u'不通过']),
-            "columnName4": random.choice([u'通过', u'不通过']),
+            "id": store_id_list[i],
+            "name": u"门店名称",
+            "o_vsn": MenuVersion.objects.get(id=o_vsn_id).menu_cn_name,
+            "n_vsn": MenuVersion.objects.get(id=n_vsn_id).menu_cn_name,
         }
-        item['isOk'] = u'通过' if item['columnName3'] == u'通过' and item['columnName4'] == u'通过' else u'不通过',
 
         items_list.append(item)
 
     rtdata = {
         "catalogues":{
             "index": u"序号",
-            "task": u"门店ID",
-            "progress": u"门店名称",
-            "host": u"检查项1",
-            "date": u"原菜单版本",
+            "id": u"门店ID",
+            "name": u"门店名称",
+            "o_vsn": u"原菜单",
+            "n_vsn": u"新菜单",
         },
         "items":items_list,
     }
@@ -243,3 +244,28 @@ def get_new_version_log(request):
             "oper_user": item.oper_user,
         })
     return render_json({"data": retdata})
+
+
+def base_version_query_store(request):
+    store_id = request.GET.getlist('data')
+    items = [{
+        "index": 1,
+        "id": store_id,
+        "name": u"门店名称",
+        "tbl1": "211",
+        "tbl2": "232",
+        "tbl3": "232",
+    }]
+
+    rtdata = {
+        "catalogues":{
+            "index": u"序号",
+            "id": u"门店ID",
+            "name": u"门店名称",
+            "tbl1": u"表1",
+            "tbl2": u"表2",
+            "tbl3": u"表3",
+        },
+        "items":items,
+    }
+    return render_json(rtdata)

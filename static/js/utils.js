@@ -96,5 +96,23 @@ var myutils = {
         });
         d.show();
     },
+
+    process_store_ids: function (store_ids) {
+        var raw_store_id_array = $.trim(store_ids).split(/[,(\r\n)]/)
+        var store_id_array = []
+        for(var index in raw_store_id_array){
+            if($.trim(raw_store_id_array[index]) != ""){
+                store_id_array.push($.trim(raw_store_id_array[index]))
+            }
+        }
+        if(store_id_array == ""){
+            myutils.errorAlert("门店ID不能为空")
+            return
+        }else if(!myutils.isArrayItemNo(store_id_array)){
+            myutils.errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
+            return
+        }
+        return store_id_array
+    }
     
 }

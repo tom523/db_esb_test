@@ -271,25 +271,8 @@
             title: '填入门店ID',
             cancel: function (){},
             ok: function() {
-                ## 门店id支持回车换行符
-                debugger
-                $.trim($('#store_ids').val())
-                var raw_store_id_array = $('#store_ids').val().split(/[,(\r\n)]/)
-                ## 对每个数组元素进行处理，删除两端空白后，如果为空字符串，就删除该元素
-                var store_id_array = []
-                for(var index in raw_store_id_array){
-                    if($.trim(raw_store_id_array[index]) != ""){
-                        store_id_array.push(raw_store_id_array[index])
-                    }
-                }
-                if(store_id_array == ""){
-                    myutils.errorAlert("门店ID不能为空")
-                    return
-                }else if(!myutils.isArrayItemNo(store_id_array)){
-                    myutils.errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
-                    return
-                }
-                get_tbl_data(store_id_array)
+                store_ids = $('#store_ids').val()
+                get_tbl_data(myutils.process_store_ids(store_ids))
 
             },
             okValue: '检查',

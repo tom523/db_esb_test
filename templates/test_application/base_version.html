@@ -18,18 +18,22 @@
             <template id="header_tpl">
                 <tr>
                     <th style="width: 100px;">#index#</th>
-                    <th style="width: 20%;">#task#</th>
-                    <th style="width: 10%;">#progress#</th>
-                    <th style="width: 20%;">#host#</th>
-                    <th>#date#</th>
+                    <th style="width: 20%;">#id#</th>
+                    <th style="width: 10%;">#name#</th>
+                    <th style="width: 20%;">#tbl1#</th>
+                    <th style="width: 20%;">#tbl2#</th>
+                    <th>#tbl3#</th>
+                    <th>菜单版本</th>
                 </tr>
             </template>
             <template id="tpl">
                 <tr>
                     <td style="width: 100px;">#index#</td>
-                    <td style="width: 20%;">#columnName1#</td>
-                    <td style="width: 10%;">#columnName2#</td>
-                    <td style="width: 20%;">#columnName3#</td>
+                    <td style="width: 20%;">#id#</td>
+                    <td style="width: 10%;">#name#</td>
+                    <td style="width: 20%;">#tbl1#</td>
+                    <td style="width: 20%;">#tbl2#</td>
+                    <td style="width: 20%;">#tbl3#</td>
                     <td>
                         <select id="#columnName2#" class="menu_version_select" name="" >
 
@@ -42,6 +46,9 @@
         </div>
     </div>
     <script>
+        $('#base_version_update').click(function () {
+            myutils.successAlert("提示" , "更新基础版本成功")
+        })
 
         $('#base_vsn_query').click(function _storecheck () {
             content_html = "    <div class=\"king-page-box\">\n" +
@@ -50,7 +57,7 @@
                 "                <div class=\"form-group has-feedback clearfix \">\n" +
                 "                    <label class=\"control-label col-sm-2 pt0\" for=\"introduction\">门店ID：</label>\n" +
                 "                    <div class=\"col-sm-10\">\n" +
-                "                        <textarea id=\"store_ids\" class=\"form-control\" rows=\"6\" placeholder=\"填入以逗号分隔的6位数字\"></textarea>\n" +
+                "                         <input type=\"text\" class=\"form-control bk-valign-top\" id=\"store_id\" placeholder=\"输入6位数字的门店ID\"> </div>\n" +
                 "                    </div>\n" +
                 "                </div>\n" +
                 "            </form>\n" +
@@ -61,12 +68,9 @@
             title: '填入门店ID',
             cancel: function (){},
             ok: function() {
-                store_id_array = $('#store_ids').val().split(',')
-                if(store_id_array == ""){
+                store_id = $('#store_id').val()
+                if(store_id == ""){
                     myutils.errorAlert("门店ID不能为空")
-                    return
-                }else if(!myutils.isArrayItemNo(store_id_array)){
-                    myutils.errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
                     return
                 }
                 ##  window.location.href=site_url + 'test_application/new_version?store_ids=' + store_id_array
@@ -84,10 +88,11 @@
 
                 // 异步请求后台数据
                 $.ajax({
-                    url: site_url + 'change_version_query_store',
-                    data: {data: store_id_array},
+                    url: site_url + 'base_version_query_store',
+                    data: {data: store_id},
                     type: 'GET',
                     success: function(res){
+                        debugger
                         var _html = ' ';
                         var list = res.items;
                         var tpl = $('#tpl').html();

@@ -26,5 +26,6 @@ urlpatterns = patterns(
     (r'^get_new_version_fail/$', 'get_new_version_fail'),
     (r'^get_store_check_result/$', 'get_store_check_result'),
     (r'^change_version_query_store/$', 'change_version_query_store'),
+    (r'^base_version_query_store/$', 'base_version_query_store'),
 
 )

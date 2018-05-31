@@ -18,28 +18,19 @@
             <template id="header_tpl">
                 <tr>
                     <th style="width: 100px;">#index#</th>
-                    <th style="width: 20%;">#task#</th>
-                    <th style="width: 10%;">#progress#</th>
-                    <th style="width: 20%;">#host#</th>
-                    <th>#date#</th>
-                    <th>选择菜单版本</th>
+                    <th style="width: 20%;">#name#</th>
+                    <th style="width: 10%;">#id#</th>
+                    <th style="width: 20%;">#o_vsn#</th>
+                    <th>#n_vsn#</th>
                 </tr>
             </template>
             <template id="tpl">
                 <tr>
                     <td style="width: 100px;">#index#</td>
-                    <td style="width: 20%;">#columnName1#</td>
-                    <td style="width: 10%;">#columnName2#</td>
-                    <td style="width: 20%;">#columnName3#</td>
-                    <td>
-                        <select id="#columnName2#" class="menu_version_select" name="" >
-
-                        </select>
-                    </td>
-                    <td>
-                        <select id="#columnName1#" class="menu_version_select" name="" >
-                        </select>
-                    </td>
+                    <td style="width: 20%;">#name#</td>
+                    <td style="width: 10%;">#id#</td>
+                    <td style="width: 20%;">#o_vsn#</td>
+                    <td>#n_vsn#</td>
                 </tr>
             </template>
             </div>
@@ -56,9 +47,16 @@
                     </div>
                 </div>
                 <div class="form-group clearfix ">
-                    <label class="col-sm-3 control-label bk-lh30 pt0">菜单版本：</label>
+                    <label class="col-sm-3 control-label bk-lh30 pt0">原菜单版本：</label>
                     <div class="col-sm-9">
-                        <select name="" id="" class="form-control bk-valign-top menu_version_select">
+                        <select name="" id="o_vsn" class="form-control bk-valign-top menu_version_select">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group clearfix ">
+                    <label class="col-sm-3 control-label bk-lh30 pt0">新菜单版本：</label>
+                    <div class="col-sm-9">
+                        <select name="" id="n_vsn" class="form-control bk-valign-top menu_version_select">
                         </select>
                     </div>
                 </div>
@@ -69,9 +67,9 @@
     <script>
         content_html = $('#query_dialog');
         $.get(site_url + 'get_menu_version', {}, function (res) {
-            for (var key in res.data){
-                $('.menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
-            }
+         for (var key in res.data){
+             $('.menu_version_select').append("<option value=" + key + ">" + res.data[key] + "</option>")
+         }
         })
         $('#change_vsn_query').click(function _storecheck () {
             ##  content_html = "    <div class=\"king-page-box\">\n" +
@@ -93,6 +91,7 @@
             title: '填入门店ID',
             cancel: function (){},
             ok: function() {
+                store_ids = $('#store_ids').val()
                 store_id_array = $('#store_ids').val().split(',')
                 if(store_id_array == ""){
                     myutils.errorAlert("门店ID不能为空")
@@ -101,10 +100,11 @@
                     myutils.errorAlert("非正常门店ID，门店ID必须是1个或多个6位数字，并且以英文逗号分隔。")
                     return
                 }
+                o_vsn_id = $('#o_vsn option:selected').val()
+                n_vsn_id = $('#n_vsn option:selected').val()
                 ##  window.location.href=site_url + 'test_application/new_version?store_ids=' + store_id_array
                 function renderTpl(str, cfg) {
                     var re = /(#(.+?)#)/g;
-
                     return str.replace(re, function() {
                         var val = cfg[arguments[2]]+'';
                         if(typeof val == 'undefined') {
@@ -117,7 +117,7 @@
                 // 异步请求后台数据
                 $.ajax({
                     url: site_url + 'change_version_query_store',
-                    data: {data: store_id_array},
+                    data: {data: store_id_array, o_vsn_id: o_vsn_id, n_vsn_id: n_vsn_id},
                     type: 'GET',
                     success: function(res){
                         var _html = ' ';
@@ -159,6 +159,10 @@
             });
             d.showModal();
             d.content(content_html)
+        })
+        ## 换版按钮click事件 start
+        $('#change_version').click(function () {
+            myutils.successAlert("提示","换版成功")
         })
 
         ##  function renderTpl(str, cfg) {
