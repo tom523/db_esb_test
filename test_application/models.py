@@ -15,7 +15,7 @@ from home_application.models import MenuVersion
 
 
 class NewVersionLog(models.Model):
-    storeid = models.IntegerField(unique=True)
+    storeid = models.CharField(unique=True, max_length=100)
     storename = models.CharField(max_length=100)
     create_time = models.DateTimeField()
     menu_version = models.ForeignKey(MenuVersion)
